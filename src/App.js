@@ -1,26 +1,44 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
+import { Input, Button } from 'semantic-ui-react';
+import { bit_length } from './lib/codes'
+import 'semantic-ui-css/semantic.min.css';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+class App extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            instruction: ""
+        }
+    }
+
+    _onConvertClick = () => {
+        try {
+            alert(bit_length(this.state.instruction))
+        }
+        catch (error) {
+            console.error(error);
+        }
+    }
+
+    render() {
+        return (
+            <div className="App">
+                <header className="App-header">
+                    <Input
+                        action={{ content: "Convert", onClick: this._onConvertClick, size: "huge" }}
+                        focus={true}
+                        label={{ content: "Instruction:", size: "small" }}
+                        labelPosition="left"
+                        onChange={(event, data) => this.setState({ instruction: data.value })}
+                        size="big"
+                    />
+                </header>
+            </div>
+        );
+    }
 }
 
 export default App;
