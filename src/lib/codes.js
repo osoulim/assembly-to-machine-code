@@ -1,37 +1,4 @@
 
-export const register_8bit = [
-    "al", "ah",
-    "bl", "bh",
-    "cl", "ch",
-    "dl", "dh",
-    "spl", "bpl", "sil", "dil",
-    "r8b", "r9b", "r10b", "r11b", "r12b", "r13b", "r14b", "r15b"
-]
-
-export const register_16bit = [
-    "ax", "bx", "cx", "dx",
-    "cs", "ds", "ss", "es", "fs", "gs",
-    "sp", "bp",
-    "si", "si",
-    "ip",
-    "r8w", "r9w", "r10w", "r11w", "r12w", "r13w", "r14w", "r15w"
-]
-
-export const register_32bit = [
-    "eax", "ebx", "ecx", "edx",
-    "esp", "ebp",
-    "esi", "edi",
-    "eip",
-    "r8d", "r9d", "r10d", "r11d", "r12d", "r13d", "r14d", "r15d",
-]
-
-export const register_64bit = [
-    "rax", "rbx", "rcx", "rdx",
-    "rsp", "rbp",
-    "rsi", "rdi",
-    "rip",
-    "r8", "r9", "r10", "r11", "r12", "r13", "r14", "r15",
-]
 
 export const register_op_32bit = {
     al: "000", cl: "001", dl: "010", bl: "011",
@@ -134,17 +101,5 @@ export const rex_r = {
 
 export const scale = {
     1: "00", 2: "01", 4: "10", 8: "11"
-}
-
-export const bit_length = register => {
-    if (register_8bit.includes(register))
-        return "8bit";
-    if (register_16bit.includes(register))
-        return "16bit";
-    if (register_32bit.includes(register))
-        return "32bit";
-    if (register_64bit.includes(register))
-        return "64bit";
-    throw Error(`invalid $register`);
 }
 

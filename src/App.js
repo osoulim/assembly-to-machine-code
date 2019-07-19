@@ -1,23 +1,25 @@
 import React, { Component } from 'react';
 import { Input } from 'semantic-ui-react';
-import { bit_length } from './lib/codes'
-
+import parser from './lib/parser';
 
 class App extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            instruction: ""
+            instruction: "",
+            result: ""
         }
     }
 
     _onConvertClick = () => {
         try {
-            alert(bit_length(this.state.instruction))
+            let result = parser.parse(this.state.instruction)
+            console.log(result)
+            this.setState({ result })
         }
         catch (error) {
-            console.error(error);
+            alert(error.message);
         }
     }
 
@@ -33,6 +35,10 @@ class App extends Component {
                         onChange={(event, data) => this.setState({ instruction: data.value })}
                         size="big"
                     />
+                    <code>
+                        {this.state.result.toString()}
+                    </code>
+
                 </header>
             </div>
         );

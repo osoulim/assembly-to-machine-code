@@ -1,0 +1,102 @@
+Instruction =
+    MemoryInstruction / ArithmeticInstruction
+
+MemoryInstruction =
+	name:$("MOV"i) _ target:WritableExpression _ "," _ source:ReadableExpression
+    { return { tag: "Instruction", type: "Memory", name: name, operands: [target, source] }; }
+
+ArithmeticInstruction =
+	    name:$("ADD"i / "SUB"i / "AND"i / "OR"i) _ target:WritableExpression "," _ source:ReadableExpression
+        { return { tag: "Instruction", type: "Arithmetic", name: name, operands: [target, source] }; }
+    
+WritableExpression =
+	Register /
+    cast:SizeCast _ value:RegisterDereferenceExpression { return { tag: "Cast", size: cast, value: value }; } /
+    cast:SizeCast _ value:AddressDereferenceExpression { return { tag: "Cast", size: cast, value: value }; }
+
+ReadableExpression =
+	Register /
+    cast:SizeCast _ value:RegisterDereferenceExpression { return { tag: "Cast", size: cast, value: value }; } /
+    cast:SizeCast _ value:AddressDereferenceExpression { return { tag: "Cast", size: cast, value: value }; } /
+    cast:SizeCast _ value:LabelExpression { return { tag: "Cast", size: cast, value: value }; } /
+    cast:SizeCast _ value:Number { return { tag: "Cast", size: cast, value: value }; }
+
+AddressDereferenceExpression =
+	"[" _ label:LabelExpression _ index:IndexExpression? _ "]" { return { tag: "Label", value: label.value, deref: true, index: index }; } /
+    "[" _ number:Number _ index:IndexExpression? _ "]" { return { tag: "Number", value: number.value, deref: true, index: index }; }
+
+LabelExpression =
+	local:(".")? target:Identifier { return { tag: "Label", value: local !== null ? ("." + target.value) : target.value }; }
+
+RegisterDereferenceExpression =
+	"[" _ baseReg:Register _ index:IndexExpression? _ "]"
+    {
+    	return {
+    		tag: "Mem",
+        	baseRegister: baseReg,
+        	index: index
+    	};
+    }
+
+IndexExpression =
+	 index:("+" _ register:Register _ "*" _ multiplier:Number
+        	{ return { register: register, multiplier: multiplier.value } })?
+        _
+        constant: (operator:$("+" / "-") _ constant:Number
+                    {
+                    	if (operator === "-")
+                    	{
+                    		constant.value *= -1;
+                    	}
+                    	return constant;
+                    } )?
+    { return { index: index, constant: constant }; }
+
+Register =
+    (
+        "rax"i/ "rbx"i/ "rcx"i/ "rdx"i/
+        "rsp"i/ "rbp"i/
+        "rsi"i/ "rdi"i/
+        "rip"i/
+        "r8"i/ "r9"i/ "r10"i/ "r11"i/ "r12"i/ "r13"i/ "r14"i/ "r15"i
+    ) { return { tag: "Reg", name: text(), size: 64 }; } /
+	(
+        "eax"/ "ebx"/ "ecx"/ "edx"/
+        "esp"/ "ebp"/
+        "esi"/ "edi"/
+        "eip"/
+        "r8d"/ "r9d"/ "r10d"/ "r11d"/ "r12d"/ "r13d"/ "r14d"/ "r15d"
+    ) { return { tag: "Reg", name: text(), size: 32 }; } /
+    (
+        "ax"i/ "bx"i/ "cx"i/ "dx"i/
+        "cs"i/ "ds"i/ "ss"i/ "es"i/ "fs"i/ "gs"i/
+        "sp"i/ "bp"i/
+        "si"i/ "si"i/
+        "ip"i/
+        "r8w"i/ "r9w"i/ "r10w"i/ "r11w"i/ "r12w"i/ "r13w"i/ "r14w"i/ "r15w"i
+    ) { return { tag: "Reg", name: text(), size: 16 } } /
+    (
+        "al"i/ "ah"i/
+        "bl"i/ "bh"i/
+        "cl"i/ "ch"i/
+        "dl"i/ "dh"i/
+        "spl"i/ "bpl"i/ "sil"i/ "dil"i/
+        "r8b"i/ "r9b"i/ "r10b"i/ "r11b"i/ "r12b"i/ "r13b"i/ "r14b"i/ "r15b"i
+    ) { return { tag: "Reg", name: text(), size: 8 } }
+
+SizeCast =
+	"BYTE"i { return 8; } /
+    "WORD"i { return 16; } /
+    "DWORD"i { return 32; } /
+    "QWORD"i { return 64; } /
+    "" { return 0; }
+
+Identifier =
+	[a-zA-Z_][a-zA-Z_0-9]* { return { tag: "Identifier", value: text() }; }
+
+Number =
+	"0x"[0-9a-fA-F]+ { return { tag: "Number", value: parseInt(text(), 16), size: 4 }; } /
+	[0-9]+ { return { tag: "Number", value: parseInt(text(), 10), size: 4 }; }
+
+_ "whitespace"
+  = [ \t\r]*
