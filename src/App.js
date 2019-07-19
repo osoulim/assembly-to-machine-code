@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import { Input, Button } from 'semantic-ui-react';
+import { Input } from 'semantic-ui-react';
 import { bit_length } from './lib/codes'
-import 'semantic-ui-css/semantic.min.css';
-import './App.css';
 
 
 class App extends Component {
