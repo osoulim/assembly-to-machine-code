@@ -61,11 +61,11 @@ Register =
         "r8"i/ "r9"i/ "r10"i/ "r11"i/ "r12"i/ "r13"i/ "r14"i/ "r15"i
     ) { return { tag: "Reg", name: text(), size: 64 }; } /
 	(
-        "eax"/ "ebx"/ "ecx"/ "edx"/
-        "esp"/ "ebp"/
-        "esi"/ "edi"/
-        "eip"/
-        "r8d"/ "r9d"/ "r10d"/ "r11d"/ "r12d"/ "r13d"/ "r14d"/ "r15d"
+        "eax"i/ "ebx"i/ "ecx"i/ "edx"i/
+        "esp"i/ "ebp"i/
+        "esi"i/ "edi"i/
+        "eip"i/
+        "r8d"i/ "r9d"i/ "r10d"i/ "r11d"i/ "r12d"i/ "r13d"i/ "r14d"i/ "r15d"i
     ) { return { tag: "Reg", name: text(), size: 32 }; } /
     (
         "ax"i/ "bx"i/ "cx"i/ "dx"i/
