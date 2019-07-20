@@ -53,13 +53,6 @@ IndexExpression =
     { return { index: index, constant: constant }; }
 
 Register =
-    (
-        "rax"i/ "rbx"i/ "rcx"i/ "rdx"i/
-        "rsp"i/ "rbp"i/
-        "rsi"i/ "rdi"i/
-        "rip"i/
-        "r8"i/ "r9"i/ "r10"i/ "r11"i/ "r12"i/ "r13"i/ "r14"i/ "r15"i
-    ) { return { tag: "Reg", name: text(), size: 64 }; } /
 	(
         "eax"i/ "ebx"i/ "ecx"i/ "edx"i/
         "esp"i/ "ebp"i/
@@ -88,7 +81,6 @@ SizeCast =
 	"BYTE"i { return 8; } /
     "WORD"i { return 16; } /
     "DWORD"i { return 32; } /
-    "QWORD"i { return 64; } /
     "" { return 0; }
 
 Identifier =
