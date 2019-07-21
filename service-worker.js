@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/assembly2machine/precache-manifest.853b84aef828239c7ca438abe96fad80.js"
+  "/assembly2machine/precache-manifest.6ca30cd6a26514b72e348d156099e548.js"
 );
 
 self.addEventListener('message', (event) => {

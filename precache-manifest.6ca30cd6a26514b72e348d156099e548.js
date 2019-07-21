@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "b3633dede3b0ef4d757301e040397b88",
+    "revision": "bd592e769a3e78c36597da975f6b1575",
     "url": "/assembly2machine/index.html"
   },
   {
-    "revision": "6b9df31232e9f4492c72",
-    "url": "/assembly2machine/static/css/2.979f2be3.chunk.css"
+    "revision": "3da564782d4dfb97c1d3",
+    "url": "/assembly2machine/static/css/2.1dd4bafe.chunk.css"
   },
   {
-    "revision": "5ad2e711f96b98f8c4f8",
-    "url": "/assembly2machine/static/css/main.c6531d5b.chunk.css"
+    "revision": "07f2115b3ae8b843517e",
+    "url": "/assembly2machine/static/css/main.81594ce6.chunk.css"
   },
   {
-    "revision": "6b9df31232e9f4492c72",
-    "url": "/assembly2machine/static/js/2.2ea8b479.chunk.js"
+    "revision": "3da564782d4dfb97c1d3",
+    "url": "/assembly2machine/static/js/2.a9c08e65.chunk.js"
   },
   {
-    "revision": "5ad2e711f96b98f8c4f8",
-    "url": "/assembly2machine/static/js/main.5b0bb22a.chunk.js"
+    "revision": "07f2115b3ae8b843517e",
+    "url": "/assembly2machine/static/js/main.719465b8.chunk.js"
   },
   {
     "revision": "64feaf8bb6877352a72e",
