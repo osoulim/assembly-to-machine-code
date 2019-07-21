@@ -19,7 +19,10 @@ export function dec2hex_reverse(disp) {
 export function res2string(result) {
     const { Prefix, OpCode, D, W, MOD, Reg, RM, Scale, Index, Base, Displacement } = result;
     let tmp = Prefix + OpCode + D + W + MOD + Reg + RM + Scale + Index + Base;
-    return parseInt(tmp, 2).toString(16) + Displacement;
+    let res = parseInt(tmp, 2).toString(16) + Displacement;
+    if (res.length % 2)
+        res = "0" + res;
+    return (res.match(/.{1,2}/g).join(", "))
 }
 
 export function asm2machine(instruction) {
