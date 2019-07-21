@@ -11,17 +11,13 @@ export const register_op_32bit = {
     esi: "110", edi: "111"
 }
 
-export const rm_16bit = {
-    "bx si": "000", "bx di": "001",
-    "bp si": "010", "bp di": "011",
-    "si": "100", "di": "101",
-    "bp": "110", "bx": "111",
-}
-
-export const rm_32bit = {
-    eax: "000", ecx: "001", edx: "010", ebx: "011",
-    esp: "100", ebp: "101",
-    esi: "110", edi: "111",
+export const instructions = {
+    "add": "000000",
+    "mov": "100010",
+    "sub": "001010",
+    "and": "001000",
+    "or": "000010",
+    "xor": "001100",
 }
 
 
