@@ -90,12 +90,16 @@ export function asm2machine(instruction) {
             disp = rm_field.value.constant;
         if (disp == null)
             result.MOD = "00";
-        else
+        else {
             result.MOD = disp < 256 ? "01" : "10";
+            result.Displacement = dec2hex_reverse(disp);
+        }
+        result.Reg = register_op_32bit[reg.name];
+        result.RM = register_op_32bit[rm_reg.name];
         // TODO
     }
 
-    console.log(result);
+    return result;
 }
 
 /*
