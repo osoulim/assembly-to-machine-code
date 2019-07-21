@@ -1,19 +1,21 @@
 import React, { Component } from 'react';
 import { Input } from 'semantic-ui-react';
-import { asm2machine } from './lib/asm2machine';
+import { asm2machine, res2string } from './lib/asm2machine';
 class App extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
             input: "",
-            result: {}
+            result: {},
+            output: ""
         }
     }
 
     _onConvertClick = () => {
         try {
             let res = asm2machine(this.state.input);
+            this.setState({ result: res, output: res2string(res) });
         }
         catch (error) {
             alert(error.message);
@@ -32,9 +34,12 @@ class App extends Component {
                         onChange={(event, data) => this.setState({ input: data.value })}
                         size="big"
                     />
-                    <code>
-                        {JSON.stringify(this.state.result)}
-                    </code>
+                    <pre>
+                        {JSON.stringify(this.state.result, null, '\t')}
+                    </pre>
+                    <br />
+
+                    Hex output: {this.state.output}
 
                 </header>
             </div>

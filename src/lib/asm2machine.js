@@ -16,6 +16,11 @@ export function dec2hex_reverse(disp) {
     return ww + xx + yy + zz;
 }
 
+export function res2string(result) {
+    const { Prefix, OpCode, D, W, MOD, Reg, RM, Scale, Index, Base, Displacement } = result;
+    let tmp = Prefix + OpCode + D + W + MOD + Reg + RM + Scale + Index + Base;
+    return parseInt(tmp, 2).toString(16) + Displacement;
+}
 
 export function asm2machine(instruction) {
     let parsed_instruction = parser.parse(instruction);
@@ -23,7 +28,7 @@ export function asm2machine(instruction) {
     console.log(JSON.stringify(parsed_instruction));
     let result = {
         Prefix: "",
-        OpCode: "", D: "", W: "",
+        OpCode: "000000", D: "", W: "",
         MOD: "", Reg: "", RM: "",
         Scale: "", Index: "", Base: "",
         Displacement: "",
@@ -86,13 +91,13 @@ export function asm2machine(instruction) {
         // TODO 
     }
     else {
-        let rm_reg = rm_field.value.baseRegister.name,
-            disp = rm_field.value.constant;
+        let rm_reg = rm_field.value.baseRegister,
+            disp = rm_field.value.index.constant;
         if (disp == null)
             result.MOD = "00";
         else {
-            result.MOD = disp < 256 ? "01" : "10";
-            result.Displacement = dec2hex_reverse(disp);
+            result.MOD = disp.value < 256 ? "01" : "10";
+            result.Displacement = dec2hex_reverse(disp.value);
         }
         result.Reg = register_op_32bit[reg.name];
         result.RM = register_op_32bit[rm_reg.name];
