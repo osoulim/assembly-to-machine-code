@@ -1,22 +1,19 @@
 import React, { Component } from 'react';
 import { Input } from 'semantic-ui-react';
-import parser from './lib/parser';
-
+import { asm2machine } from './lib/asm2machine';
 class App extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            instruction: "",
-            result: ""
+            input: "",
+            result: {}
         }
     }
 
     _onConvertClick = () => {
         try {
-            let result = parser.parse(this.state.instruction)
-            console.log(result)
-            this.setState({ result })
+            let res = asm2machine(this.state.input);
         }
         catch (error) {
             alert(error.message);
@@ -30,13 +27,13 @@ class App extends Component {
                     <Input
                         action={{ content: "Convert", onClick: this._onConvertClick, size: "huge" }}
                         focus={true}
-                        label={{ content: "Instruction:", size: "small" }}
+                        label={{ content: "input:", size: "small" }}
                         labelPosition="left"
-                        onChange={(event, data) => this.setState({ instruction: data.value })}
+                        onChange={(event, data) => this.setState({ input: data.value })}
                         size="big"
                     />
                     <code>
-                        {this.state.result.toString()}
+                        {JSON.stringify(this.state.result)}
                     </code>
 
                 </header>
